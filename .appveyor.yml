@@ -3,7 +3,7 @@ image: macos-sonoma
 environment:
   PYTHON_VERSION: 3.12.4
   GITHUB_TOKEN:
-    secure: 123
+    secure: 9SKIwc3VSfYJ5IChvNR74iXakJ8p90REGx8NmYiuH6wClbWAAqQrRUkf4eyWT/DKtrRNlGxqv/8CGJr5qaqZaAQRVTXpb10aVqEbsUebe5EHCdj0ujLaJ4YOhL979/w5
 
 build_script:
 - make iOS
@@ -17,5 +17,3 @@ deploy:
   auth_token: $(GITHUB_TOKEN)
   release: $(PYTHON_VERSION)
   artifact: python-ios-install
-  on:
-    APPVEYOR_REPO_TAG: true
