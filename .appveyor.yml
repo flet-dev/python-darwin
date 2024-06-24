@@ -1,5 +1,7 @@
 image: macos-sonoma
 
+skip_tags: true
+
 environment:
   PYTHON_VERSION: 3.12.4
   GITHUB_TOKEN:
