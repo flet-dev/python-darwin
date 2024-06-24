@@ -5,7 +5,7 @@ environment:
   GITHUB_TOKEN:
     secure: 123
 
-build:
+build_script:
 - make iOS
 - tar -czf python-ios-install-$PYTHON_VERSION.tar.gz install support -C .
 - find dist -type f -iname python-ios-install-*.tar.gz -exec appveyor PushArtifact -DeploymentName python-ios-install {} \;
