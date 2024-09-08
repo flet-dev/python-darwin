@@ -11,7 +11,7 @@ stack:
 - python 3.12
 
 install:
-- pyenv --help
+- pyenv --?
 
 build_script:
 - ./build-ios.sh $PYTHON_VERSION
