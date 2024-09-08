@@ -202,7 +202,7 @@ make install \
     2>&1 | tee -a ../python-$python_version.install.log
 
 echo ">>> Create a non-executable stub binary python3"
-echo "#!/bin/bash\necho Can\\'t run $(abi) binary\nexit 1" > $python_install/bin/python$python_version_short
+echo "#!/bin/bash\necho Can\\'t run $abi binary\nexit 1" > $python_install/bin/python$python_version_short
 chmod 755 $python_install/bin/python$python_version_short
 
 echo ">>> Copying additional resources to a framework"
