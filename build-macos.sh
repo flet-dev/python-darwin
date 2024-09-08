@@ -2,8 +2,7 @@
 set -eu
 
 python_version=${1:?}
-abi=${2:?}
-
+abi=arm64_x86_64
 os=macOS
 
 project_dir=$(dirname $(realpath $0))
@@ -57,10 +56,8 @@ touch $python_build_dir/configure
 echo ">>> Configuring Python build environment for $abi"
 
 # configure build environment
+rm -rf $python_install
 cd $python_build_dir
-
-#with_build_python_dir=$(which python)
-#export PATH="$python_build_dir/iOS/Resources/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin"
 
 echo ">>> Configuring Python for $abi"
 ./configure \
@@ -78,5 +75,11 @@ make \
 echo ">>> Installing Python for $abi"
 make install \
     2>&1 | tee -a ../python-$python_version.install.log
+
+echo ">>> Copying additional resources to a framework"
+cp $project_dir/resources/module.modulemap $python_install/Python.framework/Headers
+
+echo ">>> Converting .framework to .xcframework"
+xcodebuild -create-xcframework -framework $python_install/Python.framework -output $python_install/Python.xcframework
 
 # the end!
