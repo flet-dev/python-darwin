@@ -14,6 +14,9 @@ install:
 - brew upgrade pyenv
 - pyenv install $PYTHON_VERSION
 - pyenv global $PYTHON_VERSION
+- eval "$(pyenv init --path)"
+- eval "$(pyenv virtualenv-init -)"
+- python --version
 
 build_script:
 - ./build-ios.sh $PYTHON_VERSION
