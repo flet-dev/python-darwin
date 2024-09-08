@@ -11,6 +11,7 @@ stack:
 - python 3.12
 
 install:
+- brew upgrade pyenv
 - pyenv install $PYTHON_VERSION
 - pyenv global $PYTHON_VERSION
 
