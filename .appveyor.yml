@@ -1,0 +1,24 @@
+image: macos
+
+skip_tags: true
+
+environment:
+  PYTHON_VERSION: 3.13.0rc1
+  GITHUB_TOKEN:
+    secure: 9SKIwc3VSfYJ5IChvNR74rlTF9BMbAfhCGu1/TmYJBMtC6lkY+UDDkZNK7rC9xnQFUxMrNgoo9kNcNAbKbU8XAcrSwkP2H4mX04FI7P+YbxfiWC8nVHhGNxR4LzO+GO0
+
+stack:
+- python 3.12
+
+build_script:
+- ./build-all.sh $PYTHON_VERSION
+#- tar -czf python-android-install-$PYTHON_VERSION.tar.gz install support
+#- find . -maxdepth 1 -type f -iname python-android-install-*.tar.gz -exec appveyor PushArtifact -DeploymentName python-android-install {} \;
+
+test: off
+
+deploy:
+  provider: GitHub
+  auth_token: $(GITHUB_TOKEN)
+  release: v$(PYTHON_VERSION)
+  artifact: python-android-install
