@@ -171,6 +171,7 @@ echo ">>> Configuring Python build environment for $abi"
 
 # configure build environment
 cd $python_build_dir
+rm -rf $python_install
 
 with_build_python_dir=$(which python)
 export PATH="$python_build_dir/iOS/Resources/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin"
@@ -200,8 +201,11 @@ echo ">>> Installing Python for $abi"
 make install \
     2>&1 | tee -a ../python-$python_version.install.log
 
-# Create a non-executable stub binary python3
+echo ">>> Create a non-executable stub binary python3"
 echo "#!/bin/bash\necho Can\\'t run $(abi) binary\nexit 1" > $python_install/bin/python$python_version_short
 chmod 755 $python_install/bin/python$python_version_short
+
+echo ">>> Copying additional resources to a framework"
+cp $project_dir/resources/module.modulemap $python_install/Python.framework/Headers
 
 # the end!
