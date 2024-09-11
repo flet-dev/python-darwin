@@ -2,7 +2,8 @@
 set -eu
 
 python_version=${1:?}
-abi=${2:?}
+target=${2:?}
+arch=${3:?}
 
 bzip2_version=1.0.8-1
 xz_version=5.4.7-1
@@ -10,7 +11,15 @@ libffi_version=3.4.6-1
 openssl_version=3.0.15-1
 
 os=iOS
-build=custom
+version_min=13.0
+
+if [[ $target == "simulator" ]]; then
+    abi="$arch-apple-ios-$target"
+    host_triple="$arch-apple-ios$version_min-$target"
+else
+    abi="$arch-apple-ios"
+    host_triple="$arch-apple-ios$version_min"
+fi
 
 project_dir=$(dirname $(realpath $0))
 downloads=$project_dir/downloads
@@ -57,7 +66,8 @@ support_versions=$project_dir/support/$python_version_short/$os/VERSIONS
 mkdir -p $(dirname $support_versions)
 echo ">>> Create VERSIONS file for $os"
 echo "Python version: $python_version " > $support_versions
-echo "Build: $build" >> $support_versions
+echo "Build: custom" >> $support_versions
+echo "Min $os version: $version_min" >> $support_versions
 echo "---------------------" >> $support_versions
 echo "libFFI: $libffi_version" >> $support_versions
 echo "BZip2: $bzip2_version" >> $support_versions
@@ -186,7 +196,7 @@ echo ">>> Configuring Python for $abi"
     LIBFFI_LIBS="-L$libffi_install/lib -lffi" \
     --with-openssl="$openssl_install" \
     --enable-framework="$python_install" \
-    --host=$abi \
+    --host=$host_triple \
     --build=$(./config.guess) \
     --with-build-python=$with_build_python_dir \
     --enable-ipv6 \
