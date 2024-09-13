@@ -3,9 +3,13 @@ image: macos-sonoma
 skip_tags: true
 
 environment:
-  PYTHON_VERSION: 3.12.4
+  PYTHON_VERSION: 3.12.6
   GITHUB_TOKEN:
     secure: 9SKIwc3VSfYJ5IChvNR74iXakJ8p90REGx8NmYiuH6wClbWAAqQrRUkf4eyWT/DKtrRNlGxqv/8CGJr5qaqZaAQRVTXpb10aVqEbsUebe5EHCdj0ujLaJ4YOhL979/w5
+
+install:
+- git clone --branch=$PYTHON_VERSION https://github.com/beeware/Python-Apple-support.git
+- cd Python-Apple-support
 
 build_script:
 - make iOS
