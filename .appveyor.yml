@@ -7,6 +7,8 @@ environment:
   GITHUB_TOKEN:
     secure: 9SKIwc3VSfYJ5IChvNR74iXakJ8p90REGx8NmYiuH6wClbWAAqQrRUkf4eyWT/DKtrRNlGxqv/8CGJr5qaqZaAQRVTXpb10aVqEbsUebe5EHCdj0ujLaJ4YOhL979/w5
 
+stack: python 3.12
+
 install:
 - git clone --branch=$PYTHON_VERSION https://github.com/beeware/Python-Apple-support.git
 
