@@ -10,6 +10,7 @@ environment:
 stack: python 3.12
 
 install:
+- python --version
 - git clone --branch=$PYTHON_VERSION https://github.com/beeware/Python-Apple-support.git
 
 build_script:
