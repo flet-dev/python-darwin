@@ -9,12 +9,22 @@ environment:
 
 install:
 - git clone --branch=$PYTHON_VERSION https://github.com/beeware/Python-Apple-support.git
-- cd Python-Apple-support
 
 build_script:
-- make iOS
-- tar -czf python-ios-install-$PYTHON_VERSION.tar.gz install support -C .
-- find . -maxdepth 1 -type f -iname python-ios-install-*.tar.gz -exec appveyor PushArtifact -DeploymentName python-ios-install {} \;
+# Build Python for iOS and macOS
+- mkdir -p dist
+- sh: |
+    pushd Python-Apple-support
+    make iOS || exit 1
+    tar -czf ../dist/python-ios-mobile-forge-$PYTHON_VERSION.tar.gz install support -C .
+    make macOS || exit 1
+    popd
+
+# Package for Dart
+- ./package-ios-for-dart.sh Python-Apple-support $PYTHON_VERSION
+
+# Push all archives to artifacts
+- find dist -maxdepth 1 -type f -iname python-*.tar.gz -exec appveyor PushArtifact -DeploymentName python-darwin {} \;
 
 test: off
 
@@ -22,4 +32,4 @@ deploy:
   provider: GitHub
   auth_token: $(GITHUB_TOKEN)
   release: v$(PYTHON_VERSION)
-  artifact: python-ios-install
+  artifact: python-darwin
