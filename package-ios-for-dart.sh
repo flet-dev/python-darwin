@@ -22,8 +22,10 @@ build_dir=$(realpath $build_dir)
 mkdir -p dist
 
 frameworks_dir=$build_dir/xcframeworks
+python_frameworks_dir=$build_dir/python-xcframeworks
 stdlib_dir=$build_dir/python-stdlib
 mkdir -p $frameworks_dir
+mkdir -p $python_frameworks_dir
 mkdir -p $stdlib_dir
 
 # copy Python.xcframework
@@ -45,7 +47,7 @@ find "$stdlib_dir/${archs[0]}/lib-dynload" -name "*.$dylib_ext" | while read ful
         "$stdlib_dir/${archs[2]}/lib-dynload" \
         $dylib_relative_path \
         "Frameworks/serious_python_darwin.framework/python-stdlib/lib-dynload" \
-        $frameworks_dir
+        $python_frameworks_dir
     #break # run for one lib only - for tests
 done
 
