@@ -25,6 +25,7 @@ build_script:
 
 # Package for Dart
 - ./package-ios-for-dart.sh Python-Apple-support $PYTHON_VERSION
+- ./package-macos-for-dart.sh Python-Apple-support $PYTHON_VERSION
 
 # Push all archives to artifacts
 - find dist -maxdepth 1 -type f -iname python-*.tar.gz -exec appveyor PushArtifact -DeploymentName python-darwin {} \;
